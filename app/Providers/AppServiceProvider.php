@@ -2,21 +2,17 @@
 
 namespace App\Providers;
 
+use App\Contracts\SortInterface;
+use App\Services\Sorting\BubbleSortService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
-        //
+        $this->app->bind(SortInterface::class, BubbleSortService::class);
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
         //
