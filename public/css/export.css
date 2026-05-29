@@ -1,0 +1,119 @@
+body {
+    font-family: monospace;
+    max-width: 560px;
+    margin: 60px auto;
+    padding: 0 24px;
+    color: #1a1a1a;
+}
+
+h1 {
+    font-size: 1.3rem;
+    margin-bottom: 24px;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+.card-row {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 16px;
+}
+
+.card-row:last-child {
+    border-bottom: none;
+}
+
+.card-label {
+    width: 100px;
+    color: #888;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.card-value {
+    color: #1a1a1a;
+    font-size: 0.95rem;
+}
+
+.fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.field-check {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+input[type=checkbox] {
+    accent-color: #d52b1e;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+input[type=number] {
+    width: 120px;
+    padding: 3px 8px;
+    font-family: monospace;
+    font-size: 0.95rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-family: monospace;
+    background: #d52b1e;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+}
+
+button:hover {
+    background: #d52b1e;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#exportProgress {
+    display: none;
+    margin-top: 20px;
+}
+
+#exportStatus {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.progress-track {
+    background: #e5e5e5;
+    border-radius: 4px;
+    height: 12px;
+    overflow: hidden;
+}
+
+#exportBar {
+    height: 100%;
+    width: 0;
+    background: #d52b1e;
+    border-radius: 4px;
+    transition: width 0.2s ease;
+}
