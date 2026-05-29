@@ -4,6 +4,8 @@ namespace App\Services\Export;
 
 use App\Contracts\ExportServiceInterface;
 use App\Contracts\PersonRepositoryInterface;
+use App\DTO\ExportChunkDTO;
+use App\DTO\ExportStartDTO;
 
 class ExportService implements ExportServiceInterface
 {
@@ -22,7 +24,7 @@ class ExportService implements ExportServiceInterface
     {
     }
 
-    public function start(int $requested, array $fields): array
+    public function start(int $requested, array $fields): ExportStartDTO
     {
         $fields = $this->filterFields($fields);
         $max = $this->personRepository->count();
@@ -35,18 +37,18 @@ class ExportService implements ExportServiceInterface
         fputcsv($handle, array_map(fn($f) => self::FIELD_LABELS[$f], $fields));
         fclose($handle);
 
-        return [
-            'export_id' => $exportId,
-            'total' => $total,
-            'per_page' => self::PER_PAGE,
-            'pages' => (int)ceil($total / self::PER_PAGE),
-            'remaining' => $total,
-            'last_id' => 0,
-            'fields' => implode(',', $fields),
-        ];
+        return new ExportStartDTO(
+            exportId: $exportId,
+            total: $total,
+            perPage: self::PER_PAGE,
+            pages: (int)ceil($total / self::PER_PAGE),
+            remaining: $total,
+            lastId: 0,
+            fields: implode(',', $fields),
+        );
     }
 
-    public function processChunk(string $exportId, int $lastId, int $remaining, array $fields): array
+    public function processChunk(string $exportId, int $lastId, int $remaining, array $fields): ExportChunkDTO
     {
         $fields = $this->filterFields($fields);
         $path = $this->getFilePath($exportId);
@@ -66,11 +68,11 @@ class ExportService implements ExportServiceInterface
         $processed = $rows->count();
         $newLastId = $processed > 0 ? $rows->last()->id : $lastId;
 
-        return [
-            'processed' => $processed,
-            'last_id' => $newLastId,
-            'remaining' => $remaining - $processed,
-        ];
+        return new ExportChunkDTO(
+            processed: $processed,
+            lastId: $newLastId,
+            remaining: $remaining - $processed,
+        );
     }
 
     public function getFilePath(string $exportId): string
